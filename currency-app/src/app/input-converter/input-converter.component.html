@@ -1,0 +1,6 @@
+<div class="mt-6" [formGroup]="converter">
+  <p-dropdown [options]="['UAH','USD','EUR']" formControlName="baseCurrency" (onChange)="baseCurrencyActive = true"></p-dropdown>
+  <input pInputText formControlName="baseCurrencyInput" (input)="baseCurrencyInputActive = true">
+  <p-dropdown [options]="['UAH','USD','EUR']" formControlName="changeCurrency" (onChange)="changeCurrencyActive = true"></p-dropdown>
+  <input pInputText formControlName="changeCurrencyInput" (input)="changeCurrencyInputActive = true">
+</div>
