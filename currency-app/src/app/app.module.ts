@@ -12,6 +12,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from "primeng/dropdown";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -20,17 +21,18 @@ import {ReactiveFormsModule} from "@angular/forms";
     CurrencyChipComponent,
     InputConverterComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    NgbModule,
-    HttpClientModule,
-    HttpClientJsonpModule,
-    InputTextModule,
-    DropdownModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        NgbModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        InputTextModule,
+        DropdownModule,
+        ReactiveFormsModule,
+        NgxSpinnerModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UnsubscribeSubjectService} from "../common/unsubscribe.servise";
 import {FormControl, FormGroup} from "@angular/forms";
-import {debounceTime, distinctUntilChanged, merge, takeUntil} from "rxjs";
+import {debounceTime, distinctUntilChanged, finalize, merge, takeUntil} from "rxjs";
 import {CurrencyService} from "../services/currency.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-input-converter',
@@ -30,6 +31,7 @@ export class InputConverterComponent implements OnInit {
 
 
   constructor(
+    public spinner: NgxSpinnerService,
     private currencyService: CurrencyService,
     private unsubscribe$: UnsubscribeSubjectService
   ) {
@@ -53,6 +55,7 @@ export class InputConverterComponent implements OnInit {
       distinctUntilChanged(),
       takeUntil(this.unsubscribe$)
     ).subscribe(value => {
+      console.log(value);
       if(value){
         if(this.baseCurrencyActive){
           this.getCurrenciesPrice(value,this.converter.value.changeCurrency!)
@@ -111,7 +114,11 @@ export class InputConverterComponent implements OnInit {
 
   getCurrenciesPrice(base: string, change: string) {
     const pair = `${base}_${change},${change}_${base}`;
-    this.currencyService.getCurrencyPair(pair).subscribe((data: any) => {
+    this.spinner.show();
+    this.currencyService.getCurrencyPair(pair).pipe(
+      finalize(() => this.spinner.hide()),
+      takeUntil(this.unsubscribe$)
+    ).subscribe((data: any) => {
       this.baseToChangePrice = data[`${base}_${change}`];
       this.changeToBasePrice = data[`${change}_${base}`];
       if(this.converter.value.baseCurrencyInput){
